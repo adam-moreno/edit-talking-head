@@ -5,3 +5,7 @@ __pycache__/
 .env.*
 *.pem
 *.key
+examples/before/w/
+examples/before/*.mov
+examples/before/voice.wav
+*_first-cut*.mp4

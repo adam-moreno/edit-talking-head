@@ -1,0 +1,39 @@
+{
+ "source": "../before/water-heater-tip.mov",
+ "note": "Draft from pauses and filler words. Add take and restart cuts by hand, each with a why.",
+ "cuts": [
+  {
+   "start": 0.0,
+   "end": 10.696,
+   "kind": "take",
+   "why": "first take stops mid-sentence ('making a pop- no wait'); kept the second take, which is complete. Also removes the 0.8s silence at the start and the 1.7s pause before the restart",
+   "said": "Hi, I'm Dana from Tidewell Plumbing. If your water heater is making a pop- no wait."
+  },
+  {
+   "start": 18.332,
+   "end": 18.965,
+   "kind": "filler",
+   "why": "filler word \"um,\"",
+   "said": "um,"
+  },
+  {
+   "start": 23.541,
+   "end": 25.2,
+   "kind": "pause",
+   "why": "2.0s pause shortened to 0.3s"
+  },
+  {
+   "start": 29.001,
+   "end": 29.555,
+   "kind": "filler",
+   "why": "filler word \"Uh,\"",
+   "said": "Uh,"
+  },
+  {
+   "start": 32.346,
+   "end": 33.436,
+   "kind": "pause",
+   "why": "1.3s of silence at the end"
+  }
+ ]
+}

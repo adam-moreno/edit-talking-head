@@ -89,7 +89,10 @@ class Pure(unittest.TestCase):
 
     def test_no_network_code(self):
         src = open(SCRIPT).read()
-        self.assertIsNone(re.search(r"^\s*(import|from)\s+(socket|urllib|http|requests|ftplib|smtplib)", src, re.M))
+        bad = re.compile(r"\b(socket|urllib|http|requests|ftplib|smtplib|ssl)\b")
+        for line in src.splitlines():
+            if re.match(r"\s*(import|from)\s", line):
+                self.assertIsNone(bad.search(line), line)
 
 
 @unittest.skipUnless(HAVE_FFMPEG, "ffmpeg is not installed; install it with: brew install ffmpeg")
@@ -114,6 +117,14 @@ class WithFfmpeg(unittest.TestCase):
         self.assertEqual(len(p), 1)
         self.assertAlmostEqual(p[0]["start"], 2.0, delta=0.1)
         self.assertAlmostEqual(p[0]["end"], 4.0, delta=0.1)
+
+    def test_suggest_cuts_a_word_level_filler_and_its_gap(self):
+        subs = os.path.join(self.tmp, "take.srt")
+        open(subs, "w").write("1\n00:00:04,100 --> 00:00:04,400\num\n\n2\n00:00:05,000 --> 00:00:05,500\npipes\n")
+        self.assertEqual(run("suggest", self.video, "--subs", subs)[0], 0)
+        fillers = [c for c in json.load(open(os.path.join(self.tmp, "take.plan.json")))["cuts"] if c["kind"] == "filler"]
+        self.assertEqual(len(fillers), 1)
+        self.assertEqual((fillers[0]["start"], fillers[0]["end"]), (4.1, 4.9), "up to 0.1 s before the next word")
 
     def test_suggest_preview_render(self):
         plan = os.path.join(self.tmp, "take.plan.json")
